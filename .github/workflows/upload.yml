@@ -18,12 +18,12 @@ jobs:
           echo 'file content' > output/${{ matrix.var }}/file.txt
       - uses: actions/upload-artifact@v3
         with:
-          path: output/*
+          path: output
   download:
     needs: upload
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
-        with:
-          path: download_location
-      - run: ls -R
+      - run: |
+          mv artifact the_download
+          ls -R
