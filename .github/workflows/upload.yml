@@ -5,15 +5,19 @@ on:
   workflow_dispatch:
 jobs:
   upload:
+    strategy:
+      matrix:
+        var:
+          - one
+          - two
+          - three
     runs-on: ubuntu-latest
     steps:
       - run: |
-          mkdir -p output/{a,b}
-          echo 'a file text' > output/a/txt
-          echo 'b file text' > output/b/txt
+          mkdir -p output/${{ matrix.var }}
+          echo 'file content' > output/${{ matrix.var }}/file.txt
       - uses: actions/upload-artifact@v3
         with:
-          name: output_artifact
           path: output
   download:
     needs: upload
